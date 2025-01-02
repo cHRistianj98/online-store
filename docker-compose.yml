@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  zookeeper-online-store:
+    image: confluentinc/cp-zookeeper:7.3.0
+    container_name: zookeeper-online-store
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka-online-store:
+    image: confluentinc/cp-kafka:7.3.0
+    container_name: kafka-online-store
+    depends_on:
+      - zookeeper-online-store
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper-online-store:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-online-store:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+
+  schema-registry-online-store:
+    image: confluentinc/cp-schema-registry:7.3.0
+    container_name: schema-registry-online-store
+    depends_on:
+      - kafka-online-store
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry-online-store
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka-online-store:9092
+
+  kafka-ui-online-store:
+    image: provectuslabs/kafka-ui:v0.6.0
+    container_name: kafka-ui-online-store
+    depends_on:
+      - kafka-online-store
+    ports:
+      - "8080:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: online-store-cluster
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-online-store:9092
+      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry-online-store:8081
