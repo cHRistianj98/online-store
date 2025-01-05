@@ -28,8 +28,8 @@ This project is a **Kafka-based order management system** implemented using **Ja
 
 ### Step 1: Clone the Repository
 ```bash
-$ git clone https://github.com/your-repo/kafka-order-service.git
-$ cd kafka-order-service
+$ git clone https://github.com/cHRistianj98/online-store.git
+$ cd online-store
 ```
 
 ### Step 2: Configure Kafka
@@ -38,7 +38,7 @@ Ensure that Kafka is running locally or on a specified server. Update the `appli
 ### Step 3: Build and Run the Application
 ```bash
 $ mvn clean install
-$ java -jar target/kafka-order-service-0.0.1-SNAPSHOT.jar
+$ java -jar target/online-store-0.0.1-SNAPSHOT.jar
 ```
 
 ---
@@ -59,17 +59,7 @@ Ensure these topics are created in your Kafka setup or configure the application
 This project includes a `docker-compose.yml` file for setting up Kafka and Zookeeper easily.
 
 ```bash
-$ docker-compose up
-```
-
-### Build the Application Docker Image
-```bash
-$ docker build -t kafka-order-service:latest .
-```
-
-### Run the Application in Docker
-```bash
-$ docker run -p 8080:8080 --network host kafka-order-service:latest
+$ docker-compose up -d
 ```
 
 ---
