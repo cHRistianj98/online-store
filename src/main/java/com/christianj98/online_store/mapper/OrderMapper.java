@@ -2,6 +2,7 @@ package com.christianj98.online_store.mapper;
 
 import com.christianj98.online_store.dto.CreateOrderDto;
 import com.christianj98.online_store.entity.Order;
+import com.christianj98.online_store.schema.OrderKafkaRecord;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -13,6 +14,9 @@ public interface OrderMapper {
 
     @Mapping(source = "id", target = "orderId")
     CreateOrderDto toDto(Order order);
+
+    @Mapping(source = "id", target = "orderId")
+    OrderKafkaRecord toKafkaRecord(Order order);
 
     default String map(CharSequence value) {
         return value == null ? null : value.toString();
