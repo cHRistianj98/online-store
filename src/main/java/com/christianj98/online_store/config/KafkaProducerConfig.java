@@ -1,8 +1,6 @@
 package com.christianj98.online_store.config;
 
-
 import com.christianj98.online_store.schema.OrderKafkaRecord;
-import com.example.orders.Order;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -37,3 +35,4 @@ public class KafkaProducerConfig {
     public KafkaTemplate<String, OrderKafkaRecord> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
+}

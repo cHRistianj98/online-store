@@ -12,10 +12,9 @@ public interface OrderMapper {
 //    @Mapping(source = "orderId", target = "id")
     Order toEntity(CreateOrderDto dto);
 
-    @Mapping(source = "id", target = "orderId")
+//    @Mapping(source = "id", target = "orderId")
     CreateOrderDto toDto(Order order);
 
-    @Mapping(source = "id", target = "orderId")
     OrderKafkaRecord toKafkaRecord(Order order);
 
     default String map(CharSequence value) {

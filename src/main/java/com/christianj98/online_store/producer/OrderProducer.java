@@ -1,7 +1,6 @@
 package com.christianj98.online_store.producer;
 
 import com.christianj98.online_store.schema.OrderKafkaRecord;
-import com.example.orders.Order;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;

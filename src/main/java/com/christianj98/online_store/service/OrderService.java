@@ -16,7 +16,6 @@ public class OrderService {
     private final OrderMapper orderMapper;
     private final OrderProducer orderProducer;
 
-
     public OrderService(OrderRepository orderRepository, OrderMapper orderMapper, OrderProducer orderProducer) {
         this.orderRepository = orderRepository;
         this.orderMapper = orderMapper;
