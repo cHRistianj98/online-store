@@ -13,4 +13,8 @@ public interface OrderMapper {
 
     @Mapping(source = "id", target = "orderId")
     CreateOrderDto toDto(Order order);
+
+    default String map(CharSequence value) {
+        return value == null ? null : value.toString();
+    }
 }

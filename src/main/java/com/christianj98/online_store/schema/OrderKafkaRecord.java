@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package com.christianj98.online_store.entity;
+package com.christianj98.online_store.schema;
 
 import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
@@ -13,26 +13,26 @@ import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
-public class Order extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 5088267243614975116L;
+public class OrderKafkaRecord extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
+  private static final long serialVersionUID = -7568120744524972336L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Order\",\"namespace\":\"com.christianj98.online_store.entity\",\"fields\":[{\"name\":\"id\",\"type\":\"int\",\"doc\":\"id of the order\"},{\"name\":\"product\",\"type\":\"string\",\"doc\":\"product name\"},{\"name\":\"quantity\",\"type\":\"int\",\"doc\":\"quantity of the product\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"OrderKafkaRecord\",\"namespace\":\"com.christianj98.online_store.schema\",\"fields\":[{\"name\":\"id\",\"type\":\"int\",\"doc\":\"id of the order\"},{\"name\":\"product\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"product name\"},{\"name\":\"quantity\",\"type\":\"int\",\"doc\":\"quantity of the product\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
 
-  private static final BinaryMessageEncoder<Order> ENCODER =
+  private static final BinaryMessageEncoder<OrderKafkaRecord> ENCODER =
       new BinaryMessageEncoder<>(MODEL$, SCHEMA$);
 
-  private static final BinaryMessageDecoder<Order> DECODER =
+  private static final BinaryMessageDecoder<OrderKafkaRecord> DECODER =
       new BinaryMessageDecoder<>(MODEL$, SCHEMA$);
 
   /**
    * Return the BinaryMessageEncoder instance used by this class.
    * @return the message encoder used by this class
    */
-  public static BinaryMessageEncoder<Order> getEncoder() {
+  public static BinaryMessageEncoder<OrderKafkaRecord> getEncoder() {
     return ENCODER;
   }
 
@@ -40,7 +40,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
    * Return the BinaryMessageDecoder instance used by this class.
    * @return the message decoder used by this class
    */
-  public static BinaryMessageDecoder<Order> getDecoder() {
+  public static BinaryMessageDecoder<OrderKafkaRecord> getDecoder() {
     return DECODER;
   }
 
@@ -49,12 +49,12 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
    * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
-  public static BinaryMessageDecoder<Order> createDecoder(SchemaStore resolver) {
+  public static BinaryMessageDecoder<OrderKafkaRecord> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<>(MODEL$, SCHEMA$, resolver);
   }
 
   /**
-   * Serializes this Order to a ByteBuffer.
+   * Serializes this OrderKafkaRecord to a ByteBuffer.
    * @return a buffer holding the serialized data for this instance
    * @throws java.io.IOException if this instance could not be serialized
    */
@@ -63,12 +63,12 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
   }
 
   /**
-   * Deserializes a Order from a ByteBuffer.
+   * Deserializes a OrderKafkaRecord from a ByteBuffer.
    * @param b a byte buffer holding serialized data for an instance of this class
-   * @return a Order instance decoded from the given buffer
+   * @return a OrderKafkaRecord instance decoded from the given buffer
    * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
    */
-  public static Order fromByteBuffer(
+  public static OrderKafkaRecord fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
@@ -76,7 +76,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
   /** id of the order */
   private int id;
   /** product name */
-  private java.lang.CharSequence product;
+  private java.lang.String product;
   /** quantity of the product */
   private int quantity;
 
@@ -85,7 +85,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
    * to their default values from the schema.  If that is desired then
    * one should use <code>newBuilder()</code>.
    */
-  public Order() {}
+  public OrderKafkaRecord() {}
 
   /**
    * All-args constructor.
@@ -93,7 +93,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
    * @param product product name
    * @param quantity quantity of the product
    */
-  public Order(java.lang.Integer id, java.lang.CharSequence product, java.lang.Integer quantity) {
+  public OrderKafkaRecord(java.lang.Integer id, java.lang.String product, java.lang.Integer quantity) {
     this.id = id;
     this.product = product;
     this.quantity = quantity;
@@ -122,7 +122,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: id = (java.lang.Integer)value$; break;
-    case 1: product = (java.lang.CharSequence)value$; break;
+    case 1: product = value$ != null ? value$.toString() : null; break;
     case 2: quantity = (java.lang.Integer)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
@@ -150,7 +150,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
    * Gets the value of the 'product' field.
    * @return product name
    */
-  public java.lang.CharSequence getProduct() {
+  public java.lang.String getProduct() {
     return product;
   }
 
@@ -160,7 +160,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
    * product name
    * @param value the value to set.
    */
-  public void setProduct(java.lang.CharSequence value) {
+  public void setProduct(java.lang.String value) {
     this.product = value;
   }
 
@@ -183,50 +183,50 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
   }
 
   /**
-   * Creates a new Order RecordBuilder.
-   * @return A new Order RecordBuilder
+   * Creates a new OrderKafkaRecord RecordBuilder.
+   * @return A new OrderKafkaRecord RecordBuilder
    */
-  public static com.christianj98.online_store.entity.Order.Builder newBuilder() {
-    return new com.christianj98.online_store.entity.Order.Builder();
+  public static com.christianj98.online_store.schema.OrderKafkaRecord.Builder newBuilder() {
+    return new com.christianj98.online_store.schema.OrderKafkaRecord.Builder();
   }
 
   /**
-   * Creates a new Order RecordBuilder by copying an existing Builder.
+   * Creates a new OrderKafkaRecord RecordBuilder by copying an existing Builder.
    * @param other The existing builder to copy.
-   * @return A new Order RecordBuilder
+   * @return A new OrderKafkaRecord RecordBuilder
    */
-  public static com.christianj98.online_store.entity.Order.Builder newBuilder(com.christianj98.online_store.entity.Order.Builder other) {
+  public static com.christianj98.online_store.schema.OrderKafkaRecord.Builder newBuilder(com.christianj98.online_store.schema.OrderKafkaRecord.Builder other) {
     if (other == null) {
-      return new com.christianj98.online_store.entity.Order.Builder();
+      return new com.christianj98.online_store.schema.OrderKafkaRecord.Builder();
     } else {
-      return new com.christianj98.online_store.entity.Order.Builder(other);
+      return new com.christianj98.online_store.schema.OrderKafkaRecord.Builder(other);
     }
   }
 
   /**
-   * Creates a new Order RecordBuilder by copying an existing Order instance.
+   * Creates a new OrderKafkaRecord RecordBuilder by copying an existing OrderKafkaRecord instance.
    * @param other The existing instance to copy.
-   * @return A new Order RecordBuilder
+   * @return A new OrderKafkaRecord RecordBuilder
    */
-  public static com.christianj98.online_store.entity.Order.Builder newBuilder(com.christianj98.online_store.entity.Order other) {
+  public static com.christianj98.online_store.schema.OrderKafkaRecord.Builder newBuilder(com.christianj98.online_store.schema.OrderKafkaRecord other) {
     if (other == null) {
-      return new com.christianj98.online_store.entity.Order.Builder();
+      return new com.christianj98.online_store.schema.OrderKafkaRecord.Builder();
     } else {
-      return new com.christianj98.online_store.entity.Order.Builder(other);
+      return new com.christianj98.online_store.schema.OrderKafkaRecord.Builder(other);
     }
   }
 
   /**
-   * RecordBuilder for Order instances.
+   * RecordBuilder for OrderKafkaRecord instances.
    */
   @org.apache.avro.specific.AvroGenerated
-  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<Order>
-    implements org.apache.avro.data.RecordBuilder<Order> {
+  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<OrderKafkaRecord>
+    implements org.apache.avro.data.RecordBuilder<OrderKafkaRecord> {
 
     /** id of the order */
     private int id;
     /** product name */
-    private java.lang.CharSequence product;
+    private java.lang.String product;
     /** quantity of the product */
     private int quantity;
 
@@ -239,7 +239,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(com.christianj98.online_store.entity.Order.Builder other) {
+    private Builder(com.christianj98.online_store.schema.OrderKafkaRecord.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.id)) {
         this.id = data().deepCopy(fields()[0].schema(), other.id);
@@ -256,10 +256,10 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
     }
 
     /**
-     * Creates a Builder by copying an existing Order instance
+     * Creates a Builder by copying an existing OrderKafkaRecord instance
      * @param other The existing instance to copy.
      */
-    private Builder(com.christianj98.online_store.entity.Order other) {
+    private Builder(com.christianj98.online_store.schema.OrderKafkaRecord other) {
       super(SCHEMA$, MODEL$);
       if (isValidValue(fields()[0], other.id)) {
         this.id = data().deepCopy(fields()[0].schema(), other.id);
@@ -291,7 +291,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
       * @param value The value of 'id'.
       * @return This builder.
       */
-    public com.christianj98.online_store.entity.Order.Builder setId(int value) {
+    public com.christianj98.online_store.schema.OrderKafkaRecord.Builder setId(int value) {
       validate(fields()[0], value);
       this.id = value;
       fieldSetFlags()[0] = true;
@@ -313,7 +313,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
       * id of the order
       * @return This builder.
       */
-    public com.christianj98.online_store.entity.Order.Builder clearId() {
+    public com.christianj98.online_store.schema.OrderKafkaRecord.Builder clearId() {
       fieldSetFlags()[0] = false;
       return this;
     }
@@ -323,7 +323,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
       * product name
       * @return The value.
       */
-    public java.lang.CharSequence getProduct() {
+    public java.lang.String getProduct() {
       return product;
     }
 
@@ -334,7 +334,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
       * @param value The value of 'product'.
       * @return This builder.
       */
-    public com.christianj98.online_store.entity.Order.Builder setProduct(java.lang.CharSequence value) {
+    public com.christianj98.online_store.schema.OrderKafkaRecord.Builder setProduct(java.lang.String value) {
       validate(fields()[1], value);
       this.product = value;
       fieldSetFlags()[1] = true;
@@ -356,7 +356,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
       * product name
       * @return This builder.
       */
-    public com.christianj98.online_store.entity.Order.Builder clearProduct() {
+    public com.christianj98.online_store.schema.OrderKafkaRecord.Builder clearProduct() {
       product = null;
       fieldSetFlags()[1] = false;
       return this;
@@ -378,7 +378,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
       * @param value The value of 'quantity'.
       * @return This builder.
       */
-    public com.christianj98.online_store.entity.Order.Builder setQuantity(int value) {
+    public com.christianj98.online_store.schema.OrderKafkaRecord.Builder setQuantity(int value) {
       validate(fields()[2], value);
       this.quantity = value;
       fieldSetFlags()[2] = true;
@@ -400,18 +400,18 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
       * quantity of the product
       * @return This builder.
       */
-    public com.christianj98.online_store.entity.Order.Builder clearQuantity() {
+    public com.christianj98.online_store.schema.OrderKafkaRecord.Builder clearQuantity() {
       fieldSetFlags()[2] = false;
       return this;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public Order build() {
+    public OrderKafkaRecord build() {
       try {
-        Order record = new Order();
+        OrderKafkaRecord record = new OrderKafkaRecord();
         record.id = fieldSetFlags()[0] ? this.id : (java.lang.Integer) defaultValue(fields()[0]);
-        record.product = fieldSetFlags()[1] ? this.product : (java.lang.CharSequence) defaultValue(fields()[1]);
+        record.product = fieldSetFlags()[1] ? this.product : (java.lang.String) defaultValue(fields()[1]);
         record.quantity = fieldSetFlags()[2] ? this.quantity : (java.lang.Integer) defaultValue(fields()[2]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
@@ -423,8 +423,8 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
   }
 
   @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumWriter<Order>
-    WRITER$ = (org.apache.avro.io.DatumWriter<Order>)MODEL$.createDatumWriter(SCHEMA$);
+  private static final org.apache.avro.io.DatumWriter<OrderKafkaRecord>
+    WRITER$ = (org.apache.avro.io.DatumWriter<OrderKafkaRecord>)MODEL$.createDatumWriter(SCHEMA$);
 
   @Override public void writeExternal(java.io.ObjectOutput out)
     throws java.io.IOException {
@@ -432,8 +432,8 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
   }
 
   @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumReader<Order>
-    READER$ = (org.apache.avro.io.DatumReader<Order>)MODEL$.createDatumReader(SCHEMA$);
+  private static final org.apache.avro.io.DatumReader<OrderKafkaRecord>
+    READER$ = (org.apache.avro.io.DatumReader<OrderKafkaRecord>)MODEL$.createDatumReader(SCHEMA$);
 
   @Override public void readExternal(java.io.ObjectInput in)
     throws java.io.IOException {
@@ -460,7 +460,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
     if (fieldOrder == null) {
       this.id = in.readInt();
 
-      this.product = in.readString(this.product instanceof Utf8 ? (Utf8)this.product : null);
+      this.product = in.readString();
 
       this.quantity = in.readInt();
 
@@ -472,7 +472,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
           break;
 
         case 1:
-          this.product = in.readString(this.product instanceof Utf8 ? (Utf8)this.product : null);
+          this.product = in.readString();
           break;
 
         case 2:
