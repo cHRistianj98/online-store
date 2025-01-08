@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+  # PostgreSQL Database
   database:
     image: postgres:15
     container_name: postgres_database
@@ -14,6 +15,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  # Zookeeper
   zookeeper-online-store:
     image: confluentinc/cp-zookeeper:7.3.0
     container_name: zookeeper-online-store
@@ -23,6 +25,7 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
 
+  # Kafka
   kafka-online-store:
     image: confluentinc/cp-kafka:7.3.0
     container_name: kafka-online-store
@@ -30,14 +33,17 @@ services:
       - zookeeper-online-store
     ports:
       - "9092:9092"
+      - "9093:9093"
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper-online-store:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-online-store:9092
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-online-store:9093,PLAINTEXT_EXTERNAL://localhost:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9093,PLAINTEXT_EXTERNAL://0.0.0.0:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_EXTERNAL:PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
 
+  # Schema Registry
   schema-registry-online-store:
     image: confluentinc/cp-schema-registry:7.3.0
     container_name: schema-registry-online-store
@@ -47,8 +53,9 @@ services:
       - "8081:8081"
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry-online-store
-      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka-online-store:9092
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka-online-store:9093
 
+  # Kafka UI
   kafka-ui-online-store:
     image: provectuslabs/kafka-ui:v0.6.0
     container_name: kafka-ui-online-store
@@ -58,18 +65,18 @@ services:
       - "8089:8080"
     environment:
       KAFKA_CLUSTERS_0_NAME: online-store-cluster
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-online-store:9092
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-online-store:9093
       KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry-online-store:8081
 
-  online-store:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: online-store
-    ports:
-      - "8080:8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=prod
+#  online-store:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    container_name: online-store
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=prod
 
 volumes:
   postgres_data:
