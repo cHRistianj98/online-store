@@ -18,8 +18,8 @@ public class OrderProducer {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void sendOrder(OrderKafkaRecord order) {
-        ProducerRecord<String, OrderKafkaRecord> record = new ProducerRecord<>(ordersTopic, null, order);
-        kafkaTemplate.send(record);
+    public void sendOrder(OrderKafkaRecord orderKafkaRecord) {
+        ProducerRecord<String, OrderKafkaRecord> producerRecord = new ProducerRecord<>(ordersTopic, null, orderKafkaRecord);
+        kafkaTemplate.send(producerRecord);
     }
 }
