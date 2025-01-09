@@ -4,11 +4,6 @@
   "namespace": "com.christianj98.online_store.schema",
   "fields": [
     {
-      "name": "id",
-      "type": "int",
-      "doc": "id of the order"
-    },
-    {
       "name": "product",
       "type": "string",
       "doc": "product name"

@@ -30,7 +30,6 @@ public class OrderService {
     @Transactional
     public void processOrder(OrderKafkaRecord orderKafkaRecord) {
         Order order = orderMapper.toEntity(orderKafkaRecord);
-        order.setId(null);
         orderRepository.save(order);
     }
 }
