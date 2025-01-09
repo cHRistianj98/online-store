@@ -22,11 +22,15 @@ public class OrderService {
         this.orderProducer = orderProducer;
     }
 
-    @Transactional
     public void createOrder(CreateOrderDto createOrderDto) {
-        Order order = orderMapper.toEntity(createOrderDto);
-        orderRepository.save(order);
-        final OrderKafkaRecord kafkaRecord = orderMapper.toKafkaRecord(order);
+        final OrderKafkaRecord kafkaRecord = orderMapper.toKafkaRecord(createOrderDto);
         orderProducer.sendOrder(kafkaRecord);
+    }
+
+    @Transactional
+    public void processOrder(OrderKafkaRecord orderKafkaRecord) {
+        Order order = orderMapper.toEntity(orderKafkaRecord);
+        order.setId(null);
+        orderRepository.save(order);
     }
 }

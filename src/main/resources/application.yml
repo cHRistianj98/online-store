@@ -24,7 +24,12 @@ spring:
       properties:
         schema.registry.url: http://localhost:8081
         specific.avro.reader: true
-
+    listener:
+      missing-topics-fatal: false
+    admin:
+      client-id: admin
+      properties:
+        retries: 3
 kafka:
   topic:
     orders: orders
