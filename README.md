@@ -69,6 +69,9 @@ $ docker-compose up -d
 ### Base URL
 `http://localhost:8080/api/v1`
 
+### Swagger UI endpoint
+`http://localhost:8080/swagger-ui/index.html`
+
 ### Sample Endpoints
 1. **Create Order**:
     - **POST** `/orders`
