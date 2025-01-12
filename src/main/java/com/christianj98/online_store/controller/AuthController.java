@@ -1,7 +1,7 @@
 package com.christianj98.online_store.controller;
 
 import com.christianj98.online_store.dto.RegisterRequestDto;
-import com.christianj98.online_store.service.CustomUserDetailsService;
+import com.christianj98.online_store.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final CustomUserDetailsService customUserDetailsService;
+    private final UserService userService;
 
     @PostMapping("/register")
     public void register(@RequestBody RegisterRequestDto registerRequestDto) {
-        customUserDetailsService.createUser(registerRequestDto);
+        userService.createUser(registerRequestDto);
     }
 }
