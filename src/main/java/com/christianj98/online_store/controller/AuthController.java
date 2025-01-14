@@ -1,5 +1,7 @@
 package com.christianj98.online_store.controller;
 
+import com.christianj98.online_store.dto.LoginRequestDto;
+import com.christianj98.online_store.dto.LoginResponseDto;
 import com.christianj98.online_store.dto.RegisterRequestDto;
 import com.christianj98.online_store.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,5 +20,10 @@ public class AuthController {
     @PostMapping("/register")
     public void register(@RequestBody RegisterRequestDto registerRequestDto) {
         userService.createUser(registerRequestDto);
+    }
+
+    @PostMapping("/login")
+    public LoginResponseDto login(@RequestBody LoginRequestDto loginRequestDto) {
+        return userService.authenticate(loginRequestDto);
     }
 }
