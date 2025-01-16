@@ -2,7 +2,6 @@ package com.christianj98.online_store.exception;
 
 import com.christianj98.online_store.dto.exception.ErrorDetails;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
