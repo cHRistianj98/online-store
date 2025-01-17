@@ -30,6 +30,22 @@ spring:
       client-id: admin
       properties:
         retries: 3
+  mail:
+    host: localhost
+    port: 1025
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+        transport:
+          protocol: smtp
+    default-encoding: UTF-8
+
+
 kafka:
   topic:
     orders: orders
