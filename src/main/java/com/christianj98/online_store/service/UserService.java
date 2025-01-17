@@ -25,8 +25,8 @@ public class UserService {
 
     @Transactional
     public void createUser(RegisterRequestDto registerRequestDto) {
-        CustomUserDetails user = new CustomUserDetails();
-        user.setUsername(registerRequestDto.username());
+        final var user = new CustomUserDetails();
+        user.setUsername(registerRequestDto.email());
         user.setPassword(passwordEncoder.encode(registerRequestDto.password()));
         user.setRole("ROLE_USER");
         userRepository.save(user);
