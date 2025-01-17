@@ -34,7 +34,7 @@ public class UserService {
 
     public LoginResponseDto authenticate(LoginRequestDto loginRequest) {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password())
+                    new UsernamePasswordAuthenticationToken(loginRequest.email(), loginRequest.password())
             );
             String token = jwtTokenUtil.generateToken(authentication);
             return new LoginResponseDto(token);
