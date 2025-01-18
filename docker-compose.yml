@@ -68,6 +68,15 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-online-store:9093
       KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry-online-store:8081
 
+  mail-hog:
+    image: mailhog/mailhog:latest
+    container_name: mailhog
+    ports:
+      - "1025:1025"  # SMTP port
+      - "8025:8025"  # Web UI port
+    environment:
+      MH_STORAGE: "memory"
+
 #  online-store:
 #    build:
 #      context: .
