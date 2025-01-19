@@ -20,4 +20,5 @@ public interface UserRepository extends JpaRepository<CustomUserDetails, Long> {
             nativeQuery = true
     )
     Integer getEmailCount(@Param("email") String email);
+    Optional<CustomUserDetails> findByEmailVerificationToken(String emailVerificationToken);
 }

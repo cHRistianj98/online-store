@@ -33,6 +33,12 @@ public class CustomUserDetails implements UserDetails {
     @Column(nullable = false)
     private String role;
 
+    @Column(nullable = false)
+    private boolean enabled;
+
+    @Column(nullable = true, unique = true)
+    private String emailVerificationToken;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(() -> role);
