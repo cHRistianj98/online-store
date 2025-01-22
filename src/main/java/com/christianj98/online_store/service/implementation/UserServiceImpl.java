@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private String prepareEmailVerificationMessage(String key) {
-        return String.format("Dear user! Please verify your email account: \n\n %s",
+        return String.format("Dear user! Please verify your email account: \n\n\n %s",
                 getVerificationUrl(key, VerificationType.ACCOUNT.getName()));
     }
 
