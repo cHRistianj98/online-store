@@ -34,7 +34,8 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void createUser(RegisterRequestDto registerRequestDto) {
         if (isEmailAlreadyRegistered(registerRequestDto.email())) {
-            throw new ApiException("Given email already exist in the system.");
+            throw new ApiException(
+                    String.format("Given email %s already exist in the system", registerRequestDto.email()));
         }
         final var user = new CustomUserDetails();
         user.setUsername(registerRequestDto.email());
