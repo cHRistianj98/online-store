@@ -33,7 +33,20 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
                                 "/webjars/**",
                                 "/api/test-email",
-                                "/user/verify/**"
+                                "/user/verify/**",
+                                "/login",
+                                "/VAADIN/**",
+                                "/frontend/**",
+                                "/webjars/**",
+                                "/images/**",
+                                "/icons/**",
+                                "/manifest.webmanifest",
+                                "/sw.js",
+                                "/offline-page.html",
+                                "/favicon.ico",
+                                "/offline-stub.html",
+                                "/offline-stub.html",
+                                "/"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
