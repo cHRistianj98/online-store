@@ -35,6 +35,7 @@ public class SecurityConfig {
                                 "/api/test-email",
                                 "/user/verify/**",
                                 "/login",
+                                "/register",
                                 "/VAADIN/**",
                                 "/frontend/**",
                                 "/webjars/**",
