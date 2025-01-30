@@ -36,7 +36,7 @@ public class CustomUserDetails implements UserDetails {
     @Column(nullable = false)
     private boolean enabled;
 
-    @Column(nullable = true, unique = true)
+    @Column(unique = true)
     private String emailVerificationToken;
 
     @Override
