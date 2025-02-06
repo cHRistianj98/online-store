@@ -1,6 +1,7 @@
 package com.christianj98.online_store.service.implementation;
 
 import com.christianj98.online_store.VerificationType;
+import com.christianj98.online_store.dto.ForgotPasswordRequest;
 import com.christianj98.online_store.dto.LoginRequestDto;
 import com.christianj98.online_store.dto.LoginResponseDto;
 import com.christianj98.online_store.dto.RegisterRequestDto;
@@ -8,6 +9,7 @@ import com.christianj98.online_store.entity.CustomUserDetails;
 import com.christianj98.online_store.exception.ApiException;
 import com.christianj98.online_store.jwt.JwtTokenUtil;
 import com.christianj98.online_store.repository.UserRepository;
+import com.christianj98.online_store.service.PasswordResetService;
 import com.christianj98.online_store.service.UserService;
 import com.christianj98.online_store.service.email.EmailService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -29,6 +32,7 @@ public class UserServiceImpl implements UserService {
     private final EmailService emailService;
     private final JwtTokenUtil jwtTokenUtil;
     private final PasswordEncoder passwordEncoder;
+    private final PasswordResetService passwordResetService;
     private final UserRepository userRepository;
 
     @Transactional
@@ -54,6 +58,12 @@ public class UserServiceImpl implements UserService {
         );
         String token = jwtTokenUtil.generateToken(authentication);
         return new LoginResponseDto(token);
+    }
+
+    @Override
+    public void createPasswordResetToken(ForgotPasswordRequest request) {
+        userRepository.findByUsername(request.getEmail())
+                .ifPresent(passwordResetService::createPasswordResetToken);
     }
 
     private boolean isEmailAlreadyRegistered(String email) {
