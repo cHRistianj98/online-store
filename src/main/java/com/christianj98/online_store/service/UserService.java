@@ -8,5 +8,4 @@ import com.christianj98.online_store.dto.RegisterRequestDto;
 public interface UserService {
     void createUser(RegisterRequestDto registerRequestDto);
     LoginResponseDto authenticate(LoginRequestDto loginRequest);
-    void createPasswordResetToken(ForgotPasswordRequest request);
 }

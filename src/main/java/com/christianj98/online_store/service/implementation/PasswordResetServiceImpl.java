@@ -3,11 +3,15 @@ package com.christianj98.online_store.service.implementation;
 import com.christianj98.online_store.entity.CustomUserDetails;
 import com.christianj98.online_store.entity.PasswordResetToken;
 import com.christianj98.online_store.repository.PasswordResetTokenRepository;
+import com.christianj98.online_store.repository.UserRepository;
 import com.christianj98.online_store.service.PasswordResetService;
+import com.christianj98.online_store.service.email.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -16,28 +20,26 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class PasswordResetServiceImpl implements PasswordResetService {
 
-    private final PasswordResetTokenRepository tokenRepository;
+    private final EmailService emailService;
     private final JavaMailSender mailSender;
+    private final PasswordResetTokenRepository tokenRepository;
+    private final UserRepository userRepository;
+    private final PasswordResetTokenRepository passwordResetTokenRepository;
 
-    public void createPasswordResetToken(CustomUserDetails user) {
-        String token = UUID.randomUUID().toString();
-
-        PasswordResetToken resetToken = new PasswordResetToken();
-        resetToken.setToken(token);
-        resetToken.setUser(user);
-        resetToken.setExpiryDate(LocalDateTime.now().plusHours(24));
-        tokenRepository.save(resetToken);
-
-        sendResetEmail(user.getUsername(), token);
-    }
-
-    private void sendResetEmail(String email, String token) {
-        final var resetUrl = "http://localhost:8080/api/auth/reset-password?token=" + token;
-        final var mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(email);
-        mailMessage.setSubject("Reset hasła");
-        mailMessage.setText("Aby zresetować hasło, kliknij w poniższy link:\n" + resetUrl);
-
-        mailSender.send(mailMessage);
+    @Override
+    @Transactional
+    public void createPasswordResetTokenForUser(String email, String appUrl) {
+        userRepository.findByUsername(email)
+                .ifPresent(user -> {
+                    final var token = UUID.randomUUID().toString();
+                    final var passwordResetToken = new PasswordResetToken(
+                            token,
+                            user,
+                            LocalDateTime.now().plusMinutes(60)
+                    );
+                    tokenRepository.save(passwordResetToken);
+                    String resetUrl = appUrl + "/reset-password?token=" + token;
+                    emailService.sendResetEmail(resetUrl, token);
+                });
     }
 }

@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -63,7 +62,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createPasswordResetToken(ForgotPasswordRequest request) {
         userRepository.findByUsername(request.getEmail())
-                .ifPresent(passwordResetService::createPasswordResetToken);
+                .ifPresent(passwordResetService::createPasswordResetTokenForUser);
     }
 
     private boolean isEmailAlreadyRegistered(String email) {
