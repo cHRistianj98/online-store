@@ -59,12 +59,6 @@ public class UserServiceImpl implements UserService {
         return new LoginResponseDto(token);
     }
 
-    @Override
-    public void createPasswordResetToken(ForgotPasswordRequest request) {
-        userRepository.findByUsername(request.getEmail())
-                .ifPresent(passwordResetService::createPasswordResetTokenForUser);
-    }
-
     private boolean isEmailAlreadyRegistered(String email) {
         return userRepository.getEmailCount(email) > 0;
     }

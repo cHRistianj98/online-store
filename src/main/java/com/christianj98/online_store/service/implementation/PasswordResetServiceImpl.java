@@ -2,6 +2,7 @@ package com.christianj98.online_store.service.implementation;
 
 import com.christianj98.online_store.entity.CustomUserDetails;
 import com.christianj98.online_store.entity.PasswordResetToken;
+import com.christianj98.online_store.exception.ApiException;
 import com.christianj98.online_store.repository.PasswordResetTokenRepository;
 import com.christianj98.online_store.repository.UserRepository;
 import com.christianj98.online_store.service.PasswordResetService;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -41,5 +43,17 @@ public class PasswordResetServiceImpl implements PasswordResetService {
                     String resetUrl = appUrl + "/reset-password?token=" + token;
                     emailService.sendResetEmail(resetUrl, token);
                 });
+    }
+
+    @Override
+    public void validatePasswordResetToken(String token) {
+        final Optional<PasswordResetToken> passwordResetToken = tokenRepository.findByToken(token);
+        if (passwordResetToken.isEmpty()) {
+            throw new ApiException("Invalid token");
+        }
+
+        if (passwordResetToken.get().isExpired()) {
+            throw new ApiException("The token is expired");
+        }
     }
 }
