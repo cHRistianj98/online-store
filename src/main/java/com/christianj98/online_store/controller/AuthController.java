@@ -14,7 +14,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,6 +54,7 @@ public class AuthController {
     public ResponseEntity<?> processResetPassword(@RequestBody ResetPasswordRequest request) {
         final var token = request.getToken();
         passwordResetService.validatePasswordResetToken(token);
+
         return ResponseEntity.ok("Hasło zostało zresetowane!");
     }
 
