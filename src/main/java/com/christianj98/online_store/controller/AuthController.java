@@ -54,7 +54,6 @@ public class AuthController {
     public ResponseEntity<?> processResetPassword(@RequestBody ResetPasswordRequest request) {
         final var token = request.getToken();
         passwordResetService.validatePasswordResetToken(token);
-
         return ResponseEntity.ok("Hasło zostało zresetowane!");
     }
 
