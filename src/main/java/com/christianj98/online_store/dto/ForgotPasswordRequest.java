@@ -9,4 +9,5 @@ import lombok.experimental.SuperBuilder;
 public class ForgotPasswordRequest {
     @Email
     private String email;
+
 }
