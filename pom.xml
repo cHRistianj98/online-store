@@ -153,6 +153,12 @@
 			<artifactId>spring-kafka-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.icegreen</groupId>
+			<artifactId>greenmail</artifactId>
+			<version>1.6.3</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
