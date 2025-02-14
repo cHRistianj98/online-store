@@ -1,3 +1,4 @@
+# Build status
 [![Build Status](https://github.com/cHRistianj98/online-store/actions/workflows/ci.yml/badge.svg)](https://github.com/cHRistianj98/online-store/actions/workflows/ci.yml)
 
 # Kafka Order Service
