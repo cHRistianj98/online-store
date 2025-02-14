@@ -1,3 +1,5 @@
+[![Build Status](https://github.com/cHRistianj98/online-store/actions/workflows/ci.yml/badge.svg)](https://github.com/cHRistianj98/online-store/actions/workflows/ci.yml)
+
 # Kafka Order Service
 
 This project is a **Kafka-based order management system** implemented using **Java 17** and **Spring Boot 3**. It is designed to handle the creation, processing, and tracking of orders efficiently by leveraging the distributed messaging capabilities of Apache Kafka.
