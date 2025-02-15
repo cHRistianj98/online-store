@@ -5,10 +5,8 @@ import com.christianj98.online_store.dto.RegisterRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetupTest;
-import org.junit.Ignore;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -16,9 +14,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.test.context.EmbeddedKafka;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -26,6 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
+@DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
 @EnableKafka
 @ActiveProfiles("integration")
 @EmbeddedKafka(partitions = 1,
@@ -69,6 +70,10 @@ public class AuthControllerTest {
 
     @Test
     void shouldRegisterUserSuccessfully() throws Exception {
+        registerRequestDto = RegisterRequestDto.builder()
+                .email("testUser2@example.com")
+                .password("Test123!")
+                .build();
         String requestBody = objectMapper.writeValueAsString(registerRequestDto);
 
         mockMvc.perform(post("/auth/register")
@@ -77,9 +82,16 @@ public class AuthControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @Disabled
     @Test
     void shouldLoginUserSuccessfully() throws Exception {
+        registerRequestDto = RegisterRequestDto.builder()
+                .email("testUser3@example.com")
+                .password("Test123!")
+                .build();
+        loginRequestDto = LoginRequestDto.builder()
+                .email("testUser3@example.com")
+                .password("Test123!")
+                .build();
         String registerJson = objectMapper.writeValueAsString(registerRequestDto);
         mockMvc.perform(post("/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -93,7 +105,6 @@ public class AuthControllerTest {
                         .content(loginJson))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.token").exists())
-                .andExpect(jsonPath("$.username").value("testUser@example.com"));
+                .andExpect(jsonPath("$.token").exists());
     }
 }

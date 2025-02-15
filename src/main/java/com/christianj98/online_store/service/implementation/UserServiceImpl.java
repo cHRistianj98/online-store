@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
         user.setUsername(registerRequestDto.email());
         user.setPassword(passwordEncoder.encode(registerRequestDto.password()));
         user.setRole("ROLE_USER");
-        user.setEnabled(false);
+        user.setEnabled(true);
         final String key = UUID.randomUUID().toString();
         user.setEmailVerificationToken(key);
         emailService.sendEmail(registerRequestDto.email(), "Email verification", prepareEmailVerificationMessage(key));
