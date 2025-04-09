@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum VerificationType {
+
     ACCOUNT("account");
 
     private final String name;
